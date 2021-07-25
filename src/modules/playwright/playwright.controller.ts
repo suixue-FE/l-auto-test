@@ -11,19 +11,30 @@ export class PlaywrightController {
     return '1111';
   }
 
+  @ApiQuery({ name: 'project', required: true, description: '项目名称' })
+  @ApiQuery({ name: 'fileName', required: true, description: '脚本地址' })
   @Get('screenshot')
   async screenshot(@Query() request) {
-    await this.playwrightService.screenshot(request.filePath);
+    return this.playwrightService.getScreenshot(
+      request.project,
+      request.fileName,
+    );
   }
 
-  @ApiQuery({ name: 'project', required: true })
-  @ApiQuery({ name: 'fileName', required: true })
+  @ApiQuery({ name: 'project', required: true, description: '项目名称' })
+  @ApiQuery({ name: 'fileName', required: true, description: '脚本地址' })
   @Get('scriptRun')
   async scriptRun(@Query() request) {
-    await this.playwrightService.scriptRun(request.project, request.fileName);
+    return this.playwrightService.scriptRun(request.project, request.fileName);
   }
+
+  @ApiQuery({ name: 'project', required: true, description: '项目名称' })
+  @ApiQuery({ name: 'fileName', required: true, description: '脚本地址' })
   @Get('screenshotIsSameBefore')
-  async screenshotIsSameBefore() {
-    await this.playwrightService.screenshotIsSameBefore();
+  async screenshotIsSameBefore(@Query() request) {
+    return this.playwrightService.screenshotIsSameBefore(
+      request.project,
+      request.fileName,
+    );
   }
 }
