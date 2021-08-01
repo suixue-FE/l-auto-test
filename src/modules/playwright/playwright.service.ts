@@ -8,11 +8,13 @@ export class PlaywrightService {
   async getScreenshot(
     project: string,
     fileName: string,
-    imageName = 'example.png',
+    imageName = './example.png',
   ) {
     const scriptFn = require(`../../../script/${project}/${fileName}`);
     try {
-      await scriptFn.run(imageName);
+      // console.log(scriptFn.run, 1111112);
+
+      await scriptFn.run({ screenshotUrl: imageName });
       return {
         data: imageName,
         code: RCode.OK,
@@ -28,9 +30,21 @@ export class PlaywrightService {
    * @param project 项目名称
    * @param fileName 脚本名称
    */
-  async scriptRun(project: string, fileName: string): Promise<void> {
+  async scriptRun(project: string, fileName: string) {
     const scriptFn = require(`../../../script/${project}/${fileName}`);
-    await scriptFn.run();
+    // await scriptFn.run({ testName: 'test' });
+    try {
+      await scriptFn.run({ testName: 'test' });
+      return {
+        data: 'test',
+        code: RCode.OK,
+        msg: '获取成功',
+      };
+    } catch (e) {
+      console.log(e, 123);
+
+      return { code: RCode.ERROR, msg: '脚本运行失败', data: '' };
+    }
   }
 
   /**

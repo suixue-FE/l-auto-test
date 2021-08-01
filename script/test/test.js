@@ -13,48 +13,48 @@ const run = async function (
     try {
       const navigationPromise = page.waitForNavigation();
 
-      await page.goto('https://playwright.dev/docs/why-playwright');
+      await page.goto('https://playwright.dev/');
 
       await page.setViewportSize({ width: 1440, height: 789 });
 
       await navigationPromise;
 
       await page.waitForSelector(
-        '.sidebar_15mo > .menu > .menu__list > .menu__list-item:nth-child(2) > .menu__link',
+        '.main-wrapper > .hero > .container > .buttons_1r9m > .getStarted_1iQB',
       );
       await page.click(
-        '.sidebar_15mo > .menu > .menu__list > .menu__list-item:nth-child(2) > .menu__link',
+        '.main-wrapper > .hero > .container > .buttons_1r9m > .getStarted_1iQB',
       );
 
       await page.waitForSelector(
-        '.menu__list > .menu__list-item:nth-child(2) > .menu__list > .menu__list-item:nth-child(1) > .menu__link',
+        'article > .markdown > .codeBlockContainer_K1bP:nth-child(10) > .codeBlockContent_hGly > .copyButton_Ue-o',
       );
       await page.click(
-        '.menu__list > .menu__list-item:nth-child(2) > .menu__list > .menu__list-item:nth-child(1) > .menu__link',
-      );
-
-      await page.waitForSelector(
-        'article > .markdown > ul > li:nth-child(1) > a',
-      );
-      await page.click('article > .markdown > ul > li:nth-child(1) > a');
-
-      await page.waitForSelector(
-        '.tabs-container:nth-child(8) > .margin-vert--md > div:nth-child(1) > .codeBlockContainer_K1bP > .codeBlockContent_hGly > .copyButton_Ue-o',
-      );
-      await page.click(
-        '.tabs-container:nth-child(8) > .margin-vert--md > div:nth-child(1) > .codeBlockContainer_K1bP > .codeBlockContent_hGly > .copyButton_Ue-o',
+        'article > .markdown > .codeBlockContainer_K1bP:nth-child(10) > .codeBlockContent_hGly > .copyButton_Ue-o',
       );
     } catch (e) {
+      console.log(e, 11111);
       throw new Error(`脚本运行错误：${e}`);
     }
-
+    console.log(option);
     // 逻辑区
     if (option.screenshotUrl) {
-      console.log(option.screenshotUrl, '页面截图地址');
-      await page.screenshot({ path: `${screenshotUrl}` });
+      await page.screenshot({ path: `${option.screenshotUrl}` });
     }
     if (option.testName) {
-      console.log(test);
+      test('Test login page @fast', async ({ page }) => {
+        expect(
+          await page.textContent(
+            'article > .markdown > .codeBlockContainer_K1bP:nth-child(10) > .codeBlockContent_hGly > .copyButton_Ue-o',
+          ),
+        ).toBe('Copied');
+      });
+      console.log(
+        await page.textContent(
+          'article > .markdown > .codeBlockContainer_K1bP:nth-child(10) > .codeBlockContent_hGly > .copyButton_Ue-o',
+        ),
+        111111,
+      );
     }
 
     // 关闭区
